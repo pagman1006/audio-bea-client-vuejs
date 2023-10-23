@@ -15,3 +15,11 @@ export const getProducts = (state) => {
 export const getHotdealDate = (state) => {
     return state.hotdealDate;
 }
+
+export const getImageCollection = (state) => {
+    return state.imageCollection;
+}
+
+export const getNewProducts = (state) => {
+    return state.newProducts;
+}

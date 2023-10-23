@@ -1,5 +1,7 @@
 
 
-// export const myMutation =  (state) => {
-// return state
-// }
+export const setProducts = (state, { data }) => {
+    if (data) {
+        state.products = data
+    }
+}

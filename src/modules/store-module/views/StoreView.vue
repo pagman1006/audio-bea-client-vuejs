@@ -9,7 +9,7 @@
 <script>
 import { defineAsyncComponent } from 'vue'
 
-import useProducts from '@/modules/products/composables/useProducts'
+import useStores from '@/modules/store-module/composables/useStores'
 
 export default {
   props: {
@@ -22,7 +22,7 @@ export default {
     Product: defineAsyncComponent(() => import('@/modules/products/components/Product.vue'))
   },
   setup(props) {
-    const { products } = useProducts()
+    const { products } = useStores()
     const { section } = props
 
     console.log(section)

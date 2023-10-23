@@ -9,32 +9,26 @@
         </div>
       </div>
       <div class="row">
-        <swiper 
-          :modules="modules" 
-          :spaceBetween="10" 
-          :speed="500" 
-          :loop="true" 
-          :autoplay="{
-            delay: 3000,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true
-          }"
-          :breakpoints="{
-            320: {
-              slidesPerView: 2,
-              spaceBetween: 10
-            },
-            640: {
-              slidesPerView: 3,
-              spaceBetween: 20
-            },
-            960: {
-              slidesPerView: 4,
-              spaceBetween: 20
-            }
-          }">
-          <swiper-slide v-for="product in products" :key="product.id">
-            <Product :product="product"/>
+        <swiper :modules="modules" :spaceBetween="10" :speed="500" :loop="true" :autoplay="{
+          delay: 3000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true
+        }" :breakpoints="{
+          320: {
+            slidesPerView: 2,
+            spaceBetween: 10
+          },
+          640: {
+            slidesPerView: 3,
+            spaceBetween: 20
+          },
+          960: {
+            slidesPerView: 4,
+            spaceBetween: 20
+          }
+        }">
+          <swiper-slide v-for="product in newProducts" :key="product.id">
+            <Product :product="product" />
           </swiper-slide>
         </swiper>
       </div>
@@ -57,11 +51,13 @@ export default {
     Product
   },
   setup() {
-    const { products } = useProducts()
+    const { products, newProducts } = useProducts()
+    
 
     return {
       modules: [Autoplay, Pagination],
-      products
+      products,
+      newProducts,
     }
   }
 }

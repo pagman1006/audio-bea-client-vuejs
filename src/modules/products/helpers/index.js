@@ -11,3 +11,9 @@ export const downloadImage = async (pathReference) => {
         })
     return urlPath
 }
+
+export const discountFn = (price, discount) => {
+    if (price > 0 && discount > 0) {
+        return price - (price * discount / 100)
+    }
+}

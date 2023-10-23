@@ -2,27 +2,26 @@
   <div class="product">
     <div class="product-img">
       <template v-if="img">
-        <img :src="img" :alt="product.name" />
+        <img :src="img" :alt="product.productName" />
       </template>
       <template v-else>
-        <img src="" :alt="product.name" />
+        <img src="" :alt="product.productName" />
       </template>
       <div class="product-label">
         <span class="sale">{{ product.discount }}%</span>
-        <span class="new">{{ product.typeProduct }}</span>
+        <span v-if="product.newProduct" class="new">NUEVO</span>
       </div>
     </div>
     <div class="product-body">
-      <p class="product-category">Laptops</p>
+      <p class="product-category">{{ product.productType.type }}</p>
       <h3 class="product-name">
-        <a href="#">{{ product.name }}</a>
+        <a href="#">{{ product.productName }}</a>
       </h3>
       <h4 class="product-price">
-        ${{ product.price }} <del class="product-old-price">${{ product.price
-        }}</del>
+        ${{ discount }} <del class="product-old-price">${{ product.price }}</del>
       </h4>
       <div class="product-rating">
-        <i v-for="i in 5" class="fa-star" :class="i <= product.rating ? 'fa-solid' : 'fa-regular'"></i>
+        <i v-for="i in 5" class="fa-star" :class="i <= rating ? 'fa-solid' : 'fa-regular'"></i>
 
       </div>
       <div class="product-btns">
@@ -50,17 +49,20 @@
 
 <script>
 import { onMounted, ref } from 'vue'
-import { ref as firebaseStorageRef, getDownloadURL } from 'firebase/storage'
+import { ref as firebaseStorageRef } from 'firebase/storage'
 import storage from '@/firebase/init'
 
-import { downloadImage } from '../helpers'
+import { downloadImage, discountFn } from '../helpers'
 
 export default {
   props: ['product'],
   setup(props) {
     const { product } = props
 
-    const pathReference = firebaseStorageRef(storage, `img/${product.img}`)
+    const imageName = imageSelected(product)
+    const rating = getRating(product)
+
+    const pathReference = firebaseStorageRef(storage, `img/${imageName}`)
     const img = ref(null)
 
     onMounted(async () => {
@@ -68,9 +70,39 @@ export default {
     })
 
     return {
-      img
+      img,
+      rating,
+      discount: discountFn(product.price, product.discount)
     }
   }
+}
+
+const imageSelected = ({ images }) => {
+  let img = ''
+  if (Array.isArray(images) && images.length > 0) {
+    images.map(image => {
+      if (image.selected) {
+        let { imageName } = image
+        img = imageName
+      }
+    })
+  }
+  return img
+}
+
+const getRating = ({ rankings }) => {
+  let ranking = 0
+  if (Array.isArray(rankings) && rankings.length > 0) {
+    let count = 0
+    let rating = 0
+    rankings.map(rank => {
+      let { ranking } = rank
+      count++
+      rating = rating + ranking
+    })
+    ranking = rating / count
+  }
+  return ranking
 }
 </script>
 

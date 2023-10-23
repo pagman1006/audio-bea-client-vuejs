@@ -15,8 +15,10 @@ const useProducts = () => {
   const minutes = ref(0)
   const seconds = ref(0)
 
-  onMounted(async () => {
-    await store.dispatch('product/getHotdealDate')
+  store.dispatch('product/getImageCollection')
+  store.dispatch('product/getNewProducts')
+  store.dispatch('product/getHotdealDate')
+  onMounted(() => {
     setInterval(() => {
       const { day, hour, minute, second } = updateHotdealDate(store.getters['product/getHotdealDate'])
       days.value = day
@@ -28,7 +30,8 @@ const useProducts = () => {
 
   return {
     products: computed(() => store.getters['product/getProducts']),
-    productsCollection: computed(() => store.getters['product/getCollections']),
+    productsCollection: computed(() => store.getters['product/getImageCollection']),
+    newProducts: computed(() => store.getters['product/getNewProducts']),
     days,
     hours,
     minutes,
