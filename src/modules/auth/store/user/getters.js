@@ -25,5 +25,5 @@ export const getUsername = (state) => {
 }
 
 export const getIsAdmin = (state) => {
-    return state.isAdmin
+    return (state.isAdmin === 'true')
 }

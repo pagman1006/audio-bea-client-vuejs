@@ -28,8 +28,9 @@
                 <i class="fa fa-user"></i> Mi Cuenta
               </a>
               <ul class="dropdown-menu">
-                <li v-if="isAdmin.value"><router-link class="dropdown-item" to="{name: 'consola' }">Consola</router-link>
-                </li>
+                <template v-if="isAdmin">
+                  <li><router-link class="dropdown-item" :to="{ name: 'home-console' }">Consola</router-link></li>
+                </template>
                 <li><router-link class="dropdown-item" to="{name: 'my-account' }">Cuenta </router-link></li>
                 <li><router-link class="dropdown-item" to="{name: 'following' }">Siguiendo </router-link></li>
                 <li><router-link class="dropdown-item" to="{name: 'shopping-cart' }">Carrito </router-link></li>
@@ -54,6 +55,8 @@ export default {
   setup() {
     const { isLogged, isAdmin, logOut } = useUser()
     const router = useRouter()
+    console.log("isAdmin")
+    console.log('isAdmin: ' + isAdmin.value)
 
     return {
       isLogged,
