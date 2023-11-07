@@ -15,7 +15,6 @@ export const setBrand = (state, { brandName, enabled, id }) => {
 }
 
 export const setSubBrands = (state, { data, page, pageSize, totalElements, totalPages }) => {
-    console.log(data)
     if (data) {
         state.subBrands = data
         state.page = page
@@ -25,6 +24,12 @@ export const setSubBrands = (state, { data, page, pageSize, totalElements, total
     }
 }
 
-export const setSubBrand = (state, { brandName, enabled, id }) => {
-    // state.subBrand = { id, brandName, enabled }
+export const setSubBrand = (state, data) => {
+    state.subBrand = data
+}
+
+export const deleteSubBrandById = (state, subBrandId) => {
+    console.log(subBrandId)
+    const result = state.subBrands.filter(subBrand => subBrand.id != subBrandId)
+    state.subBrands = result
 }

@@ -53,7 +53,7 @@ export default {
           }
         },
         {
-          path: 'brands',
+          path: 'sub-brands',
           name: 'list-sub-brand',
           component: () => import(/* webpackChunkName: "ListSubBrands View" */ '../components/ListSubBrand.vue')
         }

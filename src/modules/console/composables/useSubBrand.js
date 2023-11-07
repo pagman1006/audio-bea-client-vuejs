@@ -1,6 +1,7 @@
 import { useStore } from "vuex"
-import useUser from '@/modules/auth/composables/useUser'
 import { computed } from "vue"
+
+import useUser from '@/modules/auth/composables/useUser'
 
 
 const useSubBrand = () => {
@@ -8,35 +9,40 @@ const useSubBrand = () => {
   const { token } = useUser()
 
   const listSubBrands = async ({ brandId, subBrand, page, pageSize }) => {
-    console.log('listSubBrands')
-    const response = await store.dispatch('console/listSubBrands', { brandId, subBrand, page, pageSize })
+    await store.dispatch('console/listSubBrands', { brandId, subBrand, page, pageSize })
   }
 
-  const getBrandById = async (id) => {
-    if (id == undefined) {
+  const getSubBrandById = async (subBrandId) => {
+    if (subBrandId == undefined) {
       return
     }
-    const response = await store.dispatch('console/getBrandById', { id })
+    const response = await store.dispatch('console/getSubBrandById', { subBrandId })
     return response
   }
 
-  const addBrand = async (brand, token) => {
-    const { brandName } = brand
-    const response = await store.dispatch('console/createBrand', { brandName, token })
+  const addSubBrand = async (subBrand) => {
+    const { brandId, subBrandName, enabled, token } = subBrand
+    const response = await store.dispatch('console/createSubBrand', { brandId, subBrandName, enabled, token })
     await store.dispatch('console/listBrands', { 'pageSize': 50 })
     return response
   }
 
-  const updateBrandById = async (brand, token) => {
-    const { id, brandName, enabled } = brand
-    const response = await store.dispatch('console/updateBrandById', { id, brandName, enabled, token })
-    await store.dispatch('console/listBrands', { 'pageSize': 50 })
+  const updateSubBrandById = async (subBrand, token) => {
+    const { id, subBrandName, brand, enabled } = subBrand
+    const response = await store.dispatch('console/updateSubBrandById',
+      {
+        'brandId': brand.id,
+        'subBrandId': id,
+        subBrandName,
+        enabled,
+        token
+      }
+    )
     return response
   }
 
-  const deleteBrandById = async (id, token) => {
-    await store.dispatch('console/deleteBrandById', { id, token })
-    await store.dispatch('console/listBrands', { 'pageSize': 50 })
+  const deleteSubBrandById = async (brandId, subBrandId, token) => {
+    await store.dispatch('console/deleteSubBrandById', { brandId, subBrandId, token })
   }
 
   return {
@@ -49,10 +55,10 @@ const useSubBrand = () => {
     totalPages: computed(() => store.getters['console/getTotalPages']),
 
     listSubBrands,
-    getBrandById,
-    addBrand,
-    updateBrandById,
-    deleteBrandById,
+    getSubBrandById,
+    addSubBrand,
+    updateSubBrandById,
+    deleteSubBrandById,
   }
 }
 

@@ -18,7 +18,8 @@
       <a class="btn btn-success text-white btn-sm mx-2" @click.prevent="onSubmit()">
         Guardar
       </a>
-      <a class="btn btn-danger text-white btn-sm mx-2">Cancelar</a>
+      <a class="btn btn-danger text-white btn-sm mx-2"
+        @click.prevent="$router.push({ name: 'home-console' })">Cancelar</a>
     </div>
   </div>
 </template>
