@@ -11,18 +11,7 @@
 </template>
 
 <script>
-import Editor from '@tinymce/tinymce-vue'
 
-export default {
-  components: {
-    Editor
-  },
-  setup() {
-
-
-    return {}
-  }
-}
 </script>
 
 <style lang="scss" scoped></style>

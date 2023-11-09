@@ -44,7 +44,7 @@
 import { ref } from 'vue';
 import Swal from 'sweetalert2'
 
-import useBrand from '../composables/useBrand'
+import useBrand from '../../brand/composables/useBrand'
 import useSubBrand from '../composables/useSubBrand'
 
 export default {

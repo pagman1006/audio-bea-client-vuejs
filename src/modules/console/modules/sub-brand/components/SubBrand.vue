@@ -41,7 +41,7 @@ import { useRoute } from 'vue-router'
 import Swal from 'sweetalert2'
 
 import useSubBrand from '../composables/useSubBrand'
-import useBrand from '../composables/useBrand'
+import useBrand from '../../brand/composables/useBrand'
 import { watch } from 'vue'
 
 
