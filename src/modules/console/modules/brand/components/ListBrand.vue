@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex justify-content-between">
+  <div class="d-flex justify-content-between align-items-center">
     <h1>Marcas</h1>
     <template v-if="brands">
       <div class="col-md-5 col-sm-6">
@@ -26,18 +26,15 @@
       <tr class="text-center table-primary border-primary">
         <th>#</th>
         <th>Marca</th>
-        <th>Opciones</th>
+        <th>Eliminar</th>
       </tr>
     </thead>
     <tbody>
       <template v-for="brand in brands" :key="brand.id">
         <tr class="text-center">
-          <th scope="row">{{ brand.id }}</th>
-          <td>{{ brand.brandName }}</td>
+          <th @click="editById(brand.id)" scope="row">{{ brand.id }}</th>
+          <td @click="editById(brand.id)">{{ brand.brandName }}</td>
           <td>
-            <button class="btn btn-outline-success options" @click="editById(brand.id)">
-              <i class="fas fa-pencil-alt"></i>
-            </button>
             <button class="btn btn-outline-danger options" @click="deleteById(brand.id)">
               <i class="far fa-trash-alt"></i>
             </button>

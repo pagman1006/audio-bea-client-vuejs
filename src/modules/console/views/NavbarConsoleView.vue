@@ -40,7 +40,7 @@
             </a>
             <ul class="dropdown-menu">
               <li><router-link class="dropdown-item" :to="{ name: 'add-product' }">Nuevo</router-link></li>
-              <li><router-link class="dropdown-item" to="{name: 'following' }">Listar </router-link></li>
+              <li><router-link class="dropdown-item" :to="{ name: 'list-product' }">Listar </router-link></li>
             </ul>
           </li>
           <li class="nav-item dropdown mx-5">
@@ -48,12 +48,13 @@
               Usuarios
             </a>
             <ul class="dropdown-menu">
-              <li><router-link class="dropdown-item" to="{name: 'consola' }">Nuevo</router-link></li>
-              <li><router-link class="dropdown-item" to="{name: 'following' }">Listar </router-link></li>
+              <li><router-link class="dropdown-item" :to="{ name: 'add-product' }">Nuevo</router-link></li>
+              <li><router-link class="dropdown-item" :to="{ name: 'list-product' }"> Listar </router-link>
+              </li>
             </ul>
           </li>
         </ul>
-        <ul class="navbar-nav mx-5">
+        <ul class=" navbar-nav mx-5">
           <li class="nav-item"><button class="btn btn-danger btn-sm" @click="logOut">Cerrar sesión</button></li>
         </ul>
       </div>

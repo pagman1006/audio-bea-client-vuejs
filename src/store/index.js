@@ -5,6 +5,7 @@ import store from '../modules/store-module/store/store'
 import console from '../modules/console/store/console'
 import brand from '../modules/console/modules/brand/store/brand'
 import subBrand from '../modules/console/modules/sub-brand/store/sub-brand'
+import productAdmin from '../modules/console/modules/product/store/product'
 
 export default createStore({
     modules: {
@@ -14,5 +15,6 @@ export default createStore({
         console,
         brand,
         subBrand,
+        productAdmin,
     }
 })

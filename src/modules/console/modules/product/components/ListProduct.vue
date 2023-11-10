@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex justify-content-between align-items-center">
-    <h1>Sub Marcas</h1>
-    <template v-if="subBrands">
+    <h1>Productos</h1>
+    <template v-if="products">
       <div class="col-md-5 col-sm-6">
         <div class="row">
           <div class="col-md-6">
@@ -21,23 +21,37 @@
     </template>
   </div>
 
-  <table v-if="subBrands" class="table table-bordered border-primary table-hover table-sm">
+  <table v-if="products" class="table table-bordered border-primary table-hover table-sm">
     <thead>
       <tr class="text-center table-primary border-primary">
         <th>#</th>
-        <th>Sub Marca</th>
+        <th>Producto</th>
+        <th>Categoria</th>
         <th>Marca</th>
+        <th>Sub Marca</th>
+        <th>Nuevo</th>
+        <th>Precio</th>
+        <th>Descuento</th>
+        <th>Stock</th>
         <th>Eliminar</th>
       </tr>
     </thead>
     <tbody>
-      <template v-for="subBrand in subBrands" :key="subBrand.id">
+      <template v-for="(product, index) in products" :key="product.id">
         <tr class="text-center">
-          <th @click="editById(subBrand.id)" scope="row">{{ subBrand.id }}</th>
-          <td @click="editById(subBrand.id)">{{ subBrand.subBrandName }}</td>
-          <td @click="editById(subBrand.id)">{{ subBrand.brand.brandName }}</td>
+          <th @click="editById(product.id)" scope="row">{{ product.id }}</th>
+          <td @click="editById(product.id)">{{ product.productName }}</td>
+          <td @click="editById(product.id)">{{ product.productType.type }}</td>
+          <td @click="editById(product.id)">{{ product.subBrand.brand.brandName }}</td>
+          <td @click="editById(product.id)">{{ product.subBrand.subBrandName }}</td>
+          <td @click="editById(product.id)">
+            <p class="text-success" v-if="product.newProduct">Nuevo</p>
+          </td>
+          <td @click="editById(product.id)">{{ product.price }}</td>
+          <td @click="editById(product.id)">{{ product.discount }}</td>
+          <td @click="editById(product.id)">{{ product.stock }}</td>
           <td>
-            <button class="btn btn-outline-danger options" @click="deleteById(subBrand)">
+            <button class="btn btn-outline-danger options" @click="deleteById(product)">
               <i class="far fa-trash-alt"></i>
             </button>
           </td>
@@ -49,6 +63,7 @@
   <div class="d-flex justify-content-end">
 
     <template v-for="(item, index) in totalPages">
+
 
       <template v-if="index == 0">
         <button :class="{ 'disabled': page < 2 }" class="mx-1 btn btn-outline-primary btn-sm" @click="goToPage(0)">
@@ -83,52 +98,74 @@
 </template>
 
 <script>
-import { useRouter } from 'vue-router'
-import { ref, watch } from 'vue'
+import { useRouter } from 'vue-router';
+import { ref, watch } from 'vue';
 
 import Swal from 'sweetalert2'
 
-import useSubBrand from '../composables/useSubBrand'
+import useProduct from '../composables/useProduct';
 
 export default {
-
   setup() {
     const router = useRouter()
     const {
       token,
-      subBrands,
-      subBrand,
+      products,
       page,
       pageSize,
       totalElements,
       totalPages,
-      listSubBrands,
-      deleteSubBrandById,
-    } = useSubBrand();
-
+      listProducts,
+      deleteProductById,
+    } = useProduct()
     const paginationSize = ref(5)
-    listSubBrands({ 'brandId': 'all', 'subBrand': null, 'page': 0, 'pageSize': paginationSize.value })
+
+    listProducts({
+      'productType': '',
+      'productName': '',
+      'brand': '',
+      'subBrand': '',
+      'newProduct': false,
+      'page': 0,
+      'pageSize': paginationSize.value
+    })
 
     watch(
       () => paginationSize.value,
-      () => listSubBrands({ 'brandId': 'all', 'subBrand': null, 'page': 0, 'pageSize': paginationSize.value })
+      () => listProducts({
+        'productType': '',
+        'productName': '',
+        'brand': '',
+        'subBrand': '',
+        'newProduct': false,
+        'page': 0,
+        'pageSize': paginationSize.value
+      })
     )
 
     return {
-      subBrands,
-      subBrand,
+      products,
       page,
       pageSize,
       totalElements,
       totalPages,
       paginationSize,
+
       goToPage: (async (page) => {
-        listSubBrands({ 'brandId': 'all', page, 'pageSize': paginationSize.value })
+        listProducts({
+          'productType': '',
+          'productName': '',
+          'brand': '',
+          'subBrand': '',
+          'newProduct': false,
+          page,
+          'pageSize': paginationSize.value
+        })
       }),
       editById: (async (id) => {
-        router.push({ name: 'edit-sub-brand', params: { id } })
+        router.push({ name: 'edit-product', params: { id } })
       }),
-      deleteById: (async (subBrand) => {
+      deleteById: (async (product) => {
         Swal.fire({
           title: "¿Desea eliminar la marca?",
           icon: "warning",
@@ -138,8 +175,7 @@ export default {
           denyButtonText: `Cancelar`
         }).then((result) => {
           if (result.isConfirmed) {
-            // console.log(subBrand.brand.id, subBrand.id, token.value)
-            deleteSubBrandById(subBrand.brand.id, subBrand.id, token.value)
+            deleteProductById(product.id, token.value)
             Swal.fire({
               title: "Elimiando!",
               text: "Se eliminó correctamente.",
@@ -153,9 +189,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.options {
-  margin-left: 20px;
-  border-color: transparent !important;
-}
-</style>
+<style lang="scss" scoped></style>

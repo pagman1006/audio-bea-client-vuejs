@@ -13,9 +13,8 @@ const useSubBrand = () => {
     }
 
     const getSubBrandById = async (subBrandId) => {
-        if (subBrandId == undefined) {
-            return
-        }
+        if (subBrandId == undefined) return
+        
         const response = await store.dispatch('subBrand/getSubBrandById', { subBrandId })
         return response
     }

@@ -5,26 +5,26 @@
 // // }
 
 
-// export const getBrands = (state) => {
-//     return state.brands
-// }
+export const getProducts = (state) => {
+    return state.products
+}
 
-// export const getBrand = (state) => {
-//     return state.brand
-// }
+export const getProduct = (state) => {
+    return state.product
+}
 
-// export const getPage = (state) => {
-//     return state.page
-// }
+export const getPage = (state) => {
+    return state.page
+}
 
-// export const getPageSize = (state) => {
-//     return state.pageSize
-// }
+export const getPageSize = (state) => {
+    return state.pageSize
+}
 
-// export const getTotalElements = (state) => {
-//     return state.totalElements
-// }
+export const getTotalElements = (state) => {
+    return state.totalElements
+}
 
-// export const getTotalPages = (state) => {
-//     return state.totalPages
-// }
+export const getTotalPages = (state) => {
+    return state.totalPages
+}
