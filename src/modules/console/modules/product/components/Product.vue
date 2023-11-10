@@ -66,10 +66,6 @@
           </div>
         </div>
 
-
-
-
-
       </form>
     </div>
     <div class="card-footer text-center">
